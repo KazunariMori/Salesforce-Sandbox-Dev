@@ -1,0 +1,36 @@
+<apex:page controller="OppPageController" showHeader="false">
+<style type="text/css">
+  /* 控制footer居右显示 */
+  .footer{
+    text-align: right;
+  }
+</style>
+  <apex:sectionHeader subtitle="业务机会分页显示列表" title="业务机会"/>
+  <apex:form >
+    <apex:pageBlock >
+      <!--   显示错误异常信息 -->
+      <apex:pageMessages id="message"/>
+      <apex:pageBlockButtons location="bottom" style="text-align: center;">
+        <!-- 按钮显示效果 -->
+        <apex:outputPanel id="buttons">
+          <apex:commandButton action="{!First}" title="First" value="首页" disabled="{!disablePrevious}" reRender="showpanel,buttons"/>
+          <apex:commandButton action="{!Previous}" title="Previous" value="上一页" disabled="{!disablePrevious}" reRender="showpanel,buttons"/>
+          <apex:commandButton action="{!Next}" title="Next" value="下一页" disabled="{!disableNext}" reRender="showpanel,buttons"/>
+          <apex:commandButton action="{!End}" title="End" value="尾页" disabled="{!disableNext}" reRender="showpanel,buttons"/>
+        </apex:outputPanel>
+      </apex:pageBlockButtons>
+
+      <apex:outputPanel id="showpanel">
+        <apex:pageMessages id="theMessages" />
+        <apex:pageBlockTable value="{!Opportunitys}" var="opp" footerClass="footer">
+          <apex:column value="{!opp.Name}" />
+          <apex:column value="{!opp.StageName}" />
+          <apex:column value="{!opp.Account.Name}" />
+          <apex:column value="{!opp.Type}" />
+          <apex:column value="{!opp.Probability}" />
+          <apex:facet name="footer">第{!pageNumber}/{!totalPages}页 共计{!total_size}条</apex:facet>
+        </apex:pageBlockTable>
+      </apex:outputPanel>
+    </apex:pageBlock>
+  </apex:form>
+</apex:page>
